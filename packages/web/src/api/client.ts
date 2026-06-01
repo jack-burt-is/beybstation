@@ -1,7 +1,7 @@
 import { ApiError } from "../lib/query-client";
 import { getToken, clearToken } from "../lib/auth";
 
-const BASE = import.meta.env["VITE_API_URL"] ?? "/api";
+const BASE = (import.meta.env["VITE_API_URL"] ?? "/api").replace(/\/$/, "");
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const token = getToken();
