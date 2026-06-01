@@ -16,6 +16,8 @@ export const api = new sst.aws.Function("BeybstationApi", {
       ? "https://beybstation.com"
       : "http://localhost:5173",
     TABLE_NAME: table.name,
+    ADMIN_PASSWORD: secrets.adminPassword.value,
+    JWT_SECRET: secrets.jwtSecret.value,
   },
   link: [secrets.adminPassword, secrets.jwtSecret, table],
 });

@@ -2,30 +2,34 @@
 /* tslint:disable */
 /* eslint-disable */
 /* deno-fmt-ignore-file */
+/* biome-ignore-all lint: auto-generated */
 
-import "sst"
 declare module "sst" {
   export interface Resource {
     "AdminPassword": {
-      type: "sst.sst.Secret"
-      value: string
+      "type": "sst.sst.Secret"
+      "value": string
     }
     "BeybstationApi": {
-      name: string
-      type: "sst.aws.Function"
-      url: string
+      "name": string
+      "type": "sst.aws.Function"
+      "url": string
     }
     "BeybstationTable": {
-      name: string
-      type: "sst.aws.Dynamo"
+      "name": string
+      "type": "sst.aws.Dynamo"
     }
     "BeybstationWeb": {
-      type: "sst.aws.StaticSite"
-      url: string
+      "type": "sst.aws.StaticSite"
+      "url": string
     }
     "JwtSecret": {
-      type: "sst.sst.Secret"
-      value: string
+      "type": "sst.sst.Secret"
+      "value": string
     }
   }
 }
+/// <reference path="sst-env.d.ts" />
+
+import "sst"
+export {}
