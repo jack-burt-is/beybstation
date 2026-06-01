@@ -1,0 +1,355 @@
+Screenflow and reqs
+Round 1
+Match 1
+Player 1
+Player 2
+Match 2
+Player 3
+Player 4
+Match 3
+Player 5
+Player 6
+Match 4
+Player 7
+Player 8
+Match 5
+Player 9
+Player 10
+Match 6
+Player 11
+Player 12
+Match 7
+Player 13
+Player 14
+Match 8
+Player 15
+Player 16
+Round 2
+Player 1
+Player 3
+Player 5
+Player 7
+Player 9
+Player 11
+Player 13
+Player 15
+Player 1
+Player 5
+Player 9
+Player 13
+Semi-finals
+Player 1
+Player 9
+Final
+Player 1
+Beybstation tournaments
+Live tournament results
+Admin-only
+Landing page
+Anyone can enter the site and choose to view
+the live tournament results, or navigate to the
+admin-only section (noting they’ll have to enter
+a password on the next page to actually access
+the admin-only section).
+Beybstation tournaments
+Admin-only
+Password:
+Enter password...
+Login
+Admin log in
+User has to enter a password to access the site
+when they first arrive at site. Multiple users can
+be logged in at the same time.
+Beybstation #2
+Round 1 	Round 2 	Semi-finals 	Final
+Player 1
+Player 1	Match 1
+Player 2
+Player 1
+Player 3
+Player 3	Match 2
+Player 4
+Player 1
+Player 5
+Player 5	Match 3
+Player 6
+Player 5
+Player 7
+Match 4 	Player 7
+Player 8
+Player 9
+Player 9	Match 5
+Player 10
+Player 9
+Player 11
+Player 11	Match 6
+Player 12
+Player 9
+Player 13
+Player 13	Match 7
+Player 14
+Player 13
+Player 15
+Player 15	Match 8
+Player 16
+Live tournament results
+Any visitor can view the ‘live tournament
+results’. This page updates live as admin users
+enter results and generate/start new rounds. It
+should show the scores (once entered) beside
+the relevant match/players.
+
+
+User can click the ‘home’ icon to go back to the
+landing page.
+Beybstation tournaments
+Tournament 1 - 10.04
+Beybstation #2
+Create new
+Admin-only home screen
+User can either select an existing tournament,
+or create a new one
+Beybstation #2
+Players
+Player 1 	Player 9
+Player 2 	Player 10
+Player 3 	Player 11
+Player 4 	Player 12
+Player 5 	Player 13
+Player 6 	Player 14
+Player 7 	Player 15
+Player 8 	Player 16
+Generate Round 1
+Tournament view (state 0: pre-
+Round 1 generation)
+If a tournament has been created, but Round 1
+hasn’t been generated yet, user can only edit
+the name of the tournament and/or names of
+players.
+New tournament set up
+Tournament name:
+Enter name...
+Edit player names:
+Player 1 	Player 9
+Player 2 	Player 10
+Player 3 	Player 11
+Player 4 	Player 12
+Player 5 	Player 13
+Player 6 	Player 14
+Player 7 	Player 15
+Player 8 	Player 16
+Cancel 	Save
+Create new tournament
+To create a new tournament, user must enter a
+tournament name to save.
+
+
+Note: there will always be 16 players. User only
+has to update their names.
+Beybstation #2
+Round 1 	Shuffle match up
+Match 1 	v 	Player 2	Player 1
+Match 2 	Player 3 	v 	Player 4
+Match 3 	v 	Player 6	Player 5
+Match 4 	Player 7 	v 	Player 8
+Match 5 	Player 9 	v 	Player 10
+Match 6 	Player 11 	v 	Player 12
+Match 7 	Player 13 	v 	Player 14
+Match 8 	Player 15 	v 	Player 16
+Edit names 	Start Round 1
+Tournament view (state 1: pre-
+Round start)
+Once Round is generated, user can move
+around the order of matches. For example, if
+user moved Player 11 v Player 12 up from Match
+6 to the first match, then all Match #s would
+update accordingly.
+
+
+
+User can also shuffle the match ups (i.e. who
+plays who) and edit names. Once the Round has
+started, user can no longer edit match ups and
+names.
+Beybstation #2
+Round 1
+Add score	Match 1 	v Player 2	Player 1
+Match 2 	Player 3 v Player 4
+Match 3 	v Player 6	Player 5
+Match 4 	Player 7 v Player 8
+Match 5 	Player 9 v Player 10
+Match 6 	Player 11 v Player 12
+Match 7 	Player 13 v Player 14
+Match 8 	Player 15 v Player 16
+Generate Round 2
+Tournament view (state 2:
+Round started)
+Once Round has started, user can still edit the
+order of matches by dragging match ups (note:
+this will automatically update match #).
+
+
+When a match is in progress, user will click ‘Add
+score’ for the relevant match to enter scores
+live. The ‘Add score’ button becomes available
+when the previous match has finished.
+Beybstation #2
+Round 1 - Match 1	< back
+Player 1 	Player 2
+0	0
+Finish match
+Edit match score
+During a match, user can either tap to manually
+enter the score or use the arrows to increase/
+decrease score.
+Note: the max score a player can have is 4 -
+user shouldn’t be able to enter any more than 4.
+Additionally, user can only enter whole positive
+numbers and 0.
+Beybstation #2
+Round 1 - Match 1	< back
+Player 1 	Player 2
+1	4
+Finish match
+Finish match
+Once a player has 4 points, user can click
+‘Finish match’.
+Beybstation #2
+Round 1
+Edit	v 	4-1	Match 1 	Player 2	Player 1
+Add score	Match 2 	Player 3 v Player 4
+Match 3 	v Player 6	Player 5
+Match 4 	Player 7 v Player 8
+Match 5 	Player 9 v Player 10
+Match 6 	Player 11 v Player 12
+Match 7 	Player 13 v Player 14
+Match 8 	Player 15 v Player 16
+Generate Round 2
+Tournament view (state 2:
+Round started)
+The tournament view updates to reflect scores
+and highlight winners of matches (i.e. first
+player to reach 4 points). User can also go back
+and edit scores at any time, before the next
+round is generated.
+Beybstation #2
+Round 1 - Match 1
+Player 1 	Player 2
+4	1
+Cancel 	Save changes
+Edit match score (after it’s
+finished)
+User can go back and edit the scores and save
+changes even after the match is finished (but
+prior to the next round being generated).
+Beybstation #2
+Round 1
+Edit	v 	4-1	Match 1 	Player 2	Player 1
+Edit	4-3	Match 2 	Player 3 v Player 4
+Edit	Match 3 	v Player 6	Player 5 	3-4
+Edit	Match 4 	4-0	Player 7 v Player 8
+Edit	Match 5 	1-4	Player 9 v Player 10
+Edit	Match 6 	4-2	Player 11 v Player 12
+Edit	4-1	Match 7 	Player 13 v Player 14
+Edit	0-4	Match 8 	Player 15 v Player 16
+Generate Round 2
+Tournament view (state 2:
+Round started)
+Once all matches have finished, user can now
+generate the next round. Note: once they
+generated the next round, they can no longer
+edit scores of matches in that round.
+Beybstation #2
+Round 2
+Match 1 	v 	Player 3	Player 1
+Match 2 	Player 6 	v 	Player 7
+Match 3 	v 	Player 11	Player 10
+Match 4 	Player 13 	v 	Player 16
+Edit names 	Start Round 2
+Tournament view (state 1: pre-
+Round start)
+Once Round is generated, user can move
+around the order of matches. For example, if
+user moved Player 6 v Player 7 up from Match 2
+to the first match, then all Match #s would
+update accordingly.
+
+
+
+User can still edit names, but they can no longer
+shuffle the match ups themselves (as they
+could for Round 1, as the match ups are
+dictated by previous round winners and order of
+matches). Once the Round has started, user
+can no longer edit names for that Round.
+Beybstation #2
+Round 2
+Add score	Match 1 	v Player 3	Player 1
+Match 2 	Player 6 v Player 7
+Match 3 	v Player 11	Player 10
+Match 4 	Player 13 v Player 16
+Generate Semi-Finals
+Tournament view (state 2:
+Round started)
+Once Round has started, user can still edit the
+order of matches by dragging match ups (note:
+this will automatically update match #).
+
+
+When a match is in progress, user will click ‘Add
+score’ for the relevant match to enter scores
+live. The ‘Add score’ button becomes available
+when the previous match has finished.
+And so on and so forth...
+Rounds continue until the
+finals, where the winner of
+that match is the overall
+winner and the
+tournament is concluded.
+Player 9 2 	- 	0 Player 10
+Player 1
+Player 3
+Player 5
+Player 7
+Player 9
+Player 11
+Player 13
+Player 15
+Beybstation #2
+Round 1
+0
+4
+3
+2
+2
+-
+-
+-
+4
+4
+4
+0
+3
+-
+-
+-
+Player 2
+Player 4
+Player 6
+Player 8
+Player 10
+Player 12
+Player 14
+Player 16
+Live results for livestream
+During the tournament, we will be projecting a livestream of the tournament
+in the venue itself as well as streaming online. We will have a camera
+pointed at the arena, and we want to show the live results in a banner along
+the bottom of the screen. We also want to show the current round on the
+right. We will use OBS to set up this view, which lets us use APIs. Therefore
+we need an API (or APIs) to be built to show live results pulled from the site
+that admin users will be using to enter scores live and manage rounds.
+Tournament setup example 	Livestream set up
+
+-- 1 of 1 --
+

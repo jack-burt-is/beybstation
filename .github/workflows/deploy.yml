@@ -1,0 +1,118 @@
+name: Deploy
+
+# ─── Prerequisites ─────────────────────────────────────────────────────────────
+#
+# 1. AWS OIDC provider (one-time per AWS account):
+#    aws iam create-open-id-connect-provider \
+#      --url https://token.actions.githubusercontent.com \
+#      --client-id-list sts.amazonaws.com \
+#      --thumbprint-list 6938fd4d98bab03faadb97b34396831e3780aea1
+#
+# 2. IAM role with trust policy (replace ACCOUNT_ID and ORG/REPO):
+#    {
+#      "Version": "2012-10-17",
+#      "Statement": [{
+#        "Effect": "Allow",
+#        "Principal": {
+#          "Federated": "arn:aws:iam::ACCOUNT_ID:oidc-provider/token.actions.githubusercontent.com"
+#        },
+#        "Action": "sts:AssumeRoleWithWebIdentity",
+#        "Condition": {
+#          "StringEquals": {
+#            "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
+#            "token.actions.githubusercontent.com:sub": "repo:ORG/REPO:ref:refs/heads/main"
+#          }
+#        }
+#      }]
+#    }
+#    Attach: AdministratorAccess (or scoped to Lambda, CloudFront, S3, DynamoDB,
+#    CloudFormation, IAM PassRole, SSM).
+#
+# 3. GitHub repository secrets:
+#    AWS_ROLE_ARN   — arn:aws:iam::ACCOUNT_ID:role/beybstation-github-deploy
+#    AWS_REGION     — eu-west-2
+#
+# 4. SST secrets (set once: sst secret set <Name> <value> --stage prod):
+#    AdminPassword  — the admin panel password
+#    JwtSecret      — a long random string for signing tokens
+#
+# ──────────────────────────────────────────────────────────────────────────────
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: deploy-prod
+  cancel-in-progress: false
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  typecheck:
+    name: Typecheck
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: "11.1.0"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+  deploy:
+    name: Deploy → prod
+    needs: typecheck
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: production
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: "11.1.0"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          role-session-name: beybstation-deploy-${{ github.run_id }}
+
+      - name: Install SST CLI
+        run: npm install -g sst@3
+
+      - name: Build web
+        run: pnpm --filter @beybstation/web build
+
+      - name: Deploy (SST)
+        run: sst deploy --stage prod
+        env:
+          CI: "true"
+
+      - name: Print stack outputs
+        run: cat .sst/outputs.json

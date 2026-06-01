@@ -1,0 +1,270 @@
+/* OBS Overlay — 1920x1080. Transparent background. */
+
+@import url('../../colors_and_type.css');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 1920px; height: 1080px;
+  background: transparent;
+  font-family: var(--font-body);
+  color: var(--fg1);
+  overflow: visible;
+  -webkit-font-smoothing: antialiased;
+}
+#stage, #root {
+  position: relative;
+  width: 1920px; height: 1080px;
+}
+
+/* For the demo page, we paint a fake camera feed background.
+   In production OBS, body is transparent and the camera shows through. */
+.fake-cam {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 60% 45%, #5C1B3E 0%, #1A0B17 60%, #050308 100%),
+    repeating-linear-gradient(to bottom, rgba(255,255,255,0.02) 0 1px, transparent 1px 4px);
+  z-index: 0;
+}
+.fake-cam::after {
+  content: 'CAMERA FEED';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.3em;
+  color: rgba(255,30,142,0.25);
+}
+
+/* ============== TOP-LEFT BRAND TAG ============== */
+
+.overlay-brand {
+  position: absolute;
+  top: 32px;
+  left: 32px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(10,10,15,0.85);
+  border: 2px solid var(--bey-pink);
+  padding: 12px 16px;
+  z-index: 10;
+}
+.overlay-brand img {
+  height: 44px;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 0 8px rgba(255,30,142,0.5));
+}
+.overlay-brand .name {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  color: var(--bey-white);
+}
+.overlay-brand .live {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bey-red);
+  color: #fff;
+  padding: 4px 10px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.overlay-brand .live::before {
+  content: ''; width: 8px; height: 8px; border-radius: 999px;
+  background: #fff;
+  animation: ovblink 1s steps(2,end) infinite;
+}
+@keyframes ovblink { 50% { opacity: 0; } }
+
+/* ============== RIGHT RAIL ============== */
+
+.right-rail {
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  width: 480px;
+  background: rgba(10,10,15,0.85);
+  border: 3px solid var(--bey-pink);
+  box-shadow: 8px 8px 0 rgba(0,0,0,0.6);
+  padding: 24px;
+  z-index: 10;
+}
+.right-rail .kicker {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--bey-pink);
+  margin-bottom: 6px;
+}
+.right-rail .round-title {
+  font-family: var(--font-display);
+  font-size: 56px;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--bey-white);
+  margin-bottom: 22px;
+}
+.right-rail .active-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg3);
+  margin-bottom: 10px;
+}
+.active-card {
+  background: var(--bey-pink);
+  color: var(--bey-black);
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.active-card .row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 14px;
+}
+.active-card .pname {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  font-size: 32px;
+  line-height: 1;
+}
+.active-card .pscore {
+  font-family: var(--font-crt);
+  font-size: 84px;
+  line-height: 0.8;
+  color: var(--bey-black);
+}
+.active-card .pscore.is-winner { color: var(--bey-white); text-shadow: 0 0 8px rgba(255,255,255,0.4); }
+.active-card .divider {
+  height: 2px;
+  background: rgba(10,10,15,0.3);
+}
+
+/* ============== BOTTOM BANNER ============== */
+
+.bottom-banner {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 0;
+  height: 200px;
+  background: rgba(10,10,15,0.92);
+  border-top: 4px solid var(--bey-pink);
+  display: flex;
+  align-items: stretch;
+  z-index: 10;
+}
+
+.banner-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 28px;
+  border-right: 2px solid var(--bey-pink);
+  background: var(--bey-pink);
+  color: var(--bey-black);
+  min-width: 320px;
+}
+.banner-header .tournament {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.banner-header .round {
+  font-family: var(--font-display);
+  font-size: 48px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.banner-matches {
+  flex: 1;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 0;
+}
+.bm {
+  display: grid;
+  grid-template-rows: auto 1fr 1fr;
+  border-right: 1px solid rgba(255,30,142,0.18);
+  padding: 12px 16px;
+}
+.bm:last-child { border-right: none; }
+.bm.is-active { background: rgba(255,30,142,0.12); }
+.bm.is-done { opacity: 0.6; }
+.bm .idx {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--bey-pink);
+  margin-bottom: 6px;
+}
+.bm .player {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 18px;
+  gap: 8px;
+}
+.bm .player.is-winner { color: var(--bey-cyan); font-weight: 700; }
+.bm .player .nm {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bm .player .sc {
+  font-family: var(--font-crt);
+  font-size: 32px;
+  line-height: 1;
+  color: var(--bey-pink);
+}
+.bm.is-done .player .sc { color: var(--fg2); }
+.bm .player.is-winner .sc { color: var(--bey-cyan); text-shadow: 0 0 8px rgba(0,240,255,0.5); }
+.bm .player .sc.pending { color: var(--fg3); font-size: 24px; }
+
+/* Demo controls (only on the local index.html, hidden in OBS) */
+.demo-controls {
+  position: absolute;
+  bottom: 220px;
+  left: 32px;
+  z-index: 20;
+  display: flex;
+  gap: 8px;
+  background: rgba(10,10,15,0.9);
+  border: 2px solid var(--bey-pink);
+  padding: 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--fg2);
+  text-transform: uppercase;
+}
+.demo-controls button {
+  background: transparent;
+  border: 2px solid var(--bey-pink);
+  color: var(--bey-pink);
+  padding: 6px 12px;
+  font: inherit;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+.demo-controls button:hover { background: var(--bey-pink); color: var(--bey-black); }
+.demo-controls span { padding: 6px 0; }

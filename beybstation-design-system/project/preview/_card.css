@@ -1,0 +1,52 @@
+/* Preview card base styles. Each card is a ~700px-wide HTML doc. */
+@import url('../colors_and_type.css');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bey-black);
+  color: var(--fg1);
+  font-family: var(--font-body);
+  font-size: 14px;
+  width: 700px;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.card {
+  padding: 20px;
+  min-height: 110px;
+  position: relative;
+}
+
+.card-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--fg3);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.row { display: flex; gap: 12px; align-items: center; }
+.col { display: flex; flex-direction: column; gap: 8px; }
+
+/* Swatches */
+.swatch {
+  width: 96px; height: 96px;
+  border-radius: 0;
+  position: relative;
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  padding: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--bey-white);
+  text-transform: lowercase;
+  border: 2px solid var(--border);
+}
+.swatch.small { width: 64px; height: 64px; }
+.swatch .name { font-weight: bold; color: inherit; }
+.swatch .hex { opacity: 0.7; }
+.swatch[data-on-light] { color: var(--bey-black); }
