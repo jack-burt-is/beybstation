@@ -13,7 +13,7 @@ export const api = new sst.aws.Function("BeybstationApi", {
     NODE_ENV: $app.stage === "prod" ? "production" : "development",
     STAGE: $app.stage,
     ALLOWED_ORIGINS: $app.stage === "prod"
-      ? "https://beybstation.co.uk"
+      ? "https://beybstation.com"
       : "http://localhost:5173",
     TABLE_NAME: table.name,
   },
