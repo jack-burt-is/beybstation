@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ArrowLeft, Flag, Save } from "lucide-react";
@@ -31,6 +31,25 @@ export default function AdminMatch() {
 
   const [scoreA, setScoreA] = useState(match?.scoreA ?? 0);
   const [scoreB, setScoreB] = useState(match?.scoreB ?? 0);
+  const dirty = useRef(false);
+
+  function handleSetScoreA(v: number) {
+    dirty.current = true;
+    setScoreA(v);
+  }
+  function handleSetScoreB(v: number) {
+    dirty.current = true;
+    setScoreB(v);
+  }
+
+  // Auto-save scores so overlay/projector stay live
+  useEffect(() => {
+    if (!dirty.current || !id) return;
+    const timer = setTimeout(() => {
+      tournaments.updateMatch(id, roundIdx, matchIdx, { scoreA, scoreB, finish: false });
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [scoreA, scoreB, id, roundIdx, matchIdx]);
 
   const wasDone = match?.status === "DONE";
 
@@ -94,14 +113,14 @@ export default function AdminMatch() {
               onClick={() => {
                 const v = prompt(`Score for ${match.a} (0–4):`, String(scoreA));
                 if (v == null) return;
-                setScoreA(Math.max(0, Math.min(4, parseInt(v) || 0)));
+                handleSetScoreA(Math.max(0, Math.min(4, parseInt(v) || 0)));
               }}
             >
               {scoreA}
             </div>
             <ScoreStepper
               value={scoreA}
-              onChange={setScoreA}
+              onChange={handleSetScoreA}
               disabledInc={scoreA >= 4}
               disabledDec={scoreA <= 0}
             />
@@ -117,14 +136,14 @@ export default function AdminMatch() {
               onClick={() => {
                 const v = prompt(`Score for ${match.b} (0–4):`, String(scoreB));
                 if (v == null) return;
-                setScoreB(Math.max(0, Math.min(4, parseInt(v) || 0)));
+                handleSetScoreB(Math.max(0, Math.min(4, parseInt(v) || 0)));
               }}
             >
               {scoreB}
             </div>
             <ScoreStepper
               value={scoreB}
-              onChange={setScoreB}
+              onChange={handleSetScoreB}
               disabledInc={scoreB >= 4}
               disabledDec={scoreB <= 0}
             />

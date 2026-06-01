@@ -131,10 +131,10 @@ body {
 .app-header .brand img { height: 36px; width: auto; object-fit: contain; }
 .app-header .meta {
   font-family: var(--font-mono);
+  font-weight: 700;
   font-size: var(--fs-small);
   color: var(--fg3);
   letter-spacing: var(--tracking-mega);
-  text-transform: uppercase;
 }
 
 /* ── Toolbar ───────────────────────────────────────────────── */
@@ -158,17 +158,17 @@ h1.display {
 }
 .kicker {
   font-family: var(--font-mono);
+  font-weight: 700;
   font-size: var(--fs-small);
-  text-transform: uppercase;
   letter-spacing: var(--tracking-mega);
   color: var(--accent);
 }
 .sub {
   font-family: var(--font-mono);
+  font-weight: 700;
   font-size: var(--fs-small);
   letter-spacing: var(--tracking-mega);
   color: var(--fg3);
-  text-transform: uppercase;
 }
 
 /* ── Button ────────────────────────────────────────────────── */
@@ -270,7 +270,6 @@ h1.display {
   font-family: var(--font-mono);
   font-size: var(--fs-micro);
   letter-spacing: var(--tracking-mega);
-  text-transform: uppercase;
   font-weight: 700;
 }
 .bey-badge--live {
@@ -345,10 +344,10 @@ h1.display {
 .match-row.is-active { border-left-color: var(--bey-cyan); background: rgba(0,240,255,0.04); }
 .match-num {
   font-family: var(--font-mono);
+  font-weight: 700;
   font-size: 11px;
   color: var(--fg3);
   letter-spacing: var(--tracking-mega);
-  text-transform: uppercase;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -367,6 +366,7 @@ h1.display {
 }
 .score--pending {
   font-family: var(--font-mono);
+  font-weight: 700;
   font-size: 12px;
   color: var(--fg3);
   text-align: center;
@@ -457,10 +457,10 @@ h1.display {
 }
 .landing-hero p {
   font-family: var(--font-mono);
+  font-weight: 700;
   font-size: var(--fs-small);
   letter-spacing: var(--tracking-mega);
   color: var(--fg3);
-  text-transform: uppercase;
 }
 .landing-stage {
   display: grid;
@@ -525,6 +525,7 @@ h1.display {
 .login-error {
   color: var(--bey-red);
   font-family: var(--font-mono);
+  font-weight: 700;
   font-size: 12px;
   letter-spacing: 0.08em;
   margin-top: var(--s-2);
@@ -563,10 +564,10 @@ h1.display {
 .tourn-card.is-new:hover { border-color: var(--bey-cyan); color: var(--bey-cyan); }
 .tourn-card .date {
   font-family: var(--font-mono);
+  font-weight: 700;
   font-size: var(--fs-micro);
   letter-spacing: var(--tracking-mega);
   color: var(--fg3);
-  text-transform: uppercase;
 }
 .tourn-card .name {
   font-family: var(--font-display);
@@ -591,6 +592,7 @@ h1.display {
   align-items: center;
   margin-bottom: var(--s-6);
   font-family: var(--font-mono);
+  font-weight: 700;
   font-size: var(--fs-small);
   letter-spacing: 0.06em;
 }
@@ -642,19 +644,35 @@ h1.display {
 
 /* ── Bracket tree ──────────────────────────────────────────── */
 .bracket-wrap { overflow-x: auto; padding-bottom: var(--s-4); }
+
+.bracket-heads {
+  display: flex;
+  gap: 28px;
+  margin-bottom: var(--s-2);
+}
+.bracket-heads .col-head { width: 160px; flex-shrink: 0; margin-bottom: 0; }
+.bracket-heads .col-head.is-active { color: var(--bey-pink); }
+
 .bracket {
   display: flex;
-  gap: var(--s-5);
+  gap: 28px;
   align-items: flex-start;
   min-width: fit-content;
 }
-.bracket-col { display: flex; flex-direction: column; gap: var(--s-3); min-width: 160px; }
+.bracket-col { position: relative; width: 160px; flex-shrink: 0; }
+
+.bracket-slot {
+  display: flex;
+  align-items: center;
+}
+.bracket-slot .bx { flex: 1; min-width: 0; }
+
 .col-head {
   font-family: var(--font-mono);
+  font-weight: 700;
   font-size: var(--fs-micro);
   letter-spacing: var(--tracking-mega);
   color: var(--fg3);
-  text-transform: uppercase;
   margin-bottom: var(--s-2);
   padding-left: 4px;
 }
@@ -670,10 +688,10 @@ h1.display {
 .bx.is-pending { opacity: 0.5; }
 .bx-num {
   font-family: var(--font-mono);
+  font-weight: 700;
   font-size: var(--fs-micro);
   color: var(--fg3);
   letter-spacing: var(--tracking-mega);
-  text-transform: uppercase;
   margin-bottom: 6px;
 }
 .bx-row {
@@ -691,16 +709,16 @@ h1.display {
 .bx-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .bx-score { font-family: var(--font-crt); font-size: 18px; color: var(--bey-pink); }
 .bx-row.is-winner .bx-score { color: var(--bey-cyan); }
-.bx-score--pending { font-family: var(--font-mono); font-size: 10px; color: var(--fg3); }
+.bx-score--pending { font-family: var(--font-mono); font-weight: 700; font-size: 10px; color: var(--fg3); }
 
 .bracket-legend {
   display: flex;
   gap: var(--s-5);
   font-family: var(--font-mono);
+  font-weight: 700;
   font-size: var(--fs-micro);
   letter-spacing: 0.1em;
   color: var(--fg3);
-  text-transform: uppercase;
 }
 .dot {
   display: inline-block;
@@ -753,6 +771,7 @@ h1.display {
   border: 1px solid var(--border);
   color: var(--fg3);
   font-family: var(--font-mono);
+  font-weight: 700;
   font-size: 12px;
   padding: 6px 12px;
   cursor: pointer;
@@ -777,10 +796,10 @@ h1.display {
 .proj-brand img { height: 40px; }
 .proj-tag {
   font-family: var(--font-mono);
+  font-weight: 700;
   font-size: var(--fs-small);
   color: var(--fg3);
   letter-spacing: var(--tracking-mega);
-  text-transform: uppercase;
 }
 .proj-live {
   background: var(--bey-red);
@@ -814,10 +833,10 @@ h1.display {
 }
 .hero-kicker {
   font-family: var(--font-mono);
+  font-weight: 700;
   font-size: var(--fs-small);
   letter-spacing: var(--tracking-mega);
   color: var(--fg3);
-  text-transform: uppercase;
   text-align: center;
   margin-bottom: var(--s-3);
 }
@@ -863,7 +882,7 @@ h1.display {
 }
 .proj-mrow.is-done { border-left-color: var(--bey-pink); }
 .proj-mrow.is-active { border-left-color: var(--bey-cyan); background: rgba(0,240,255,0.04); }
-.proj-mrow .mnum { font-family: var(--font-mono); font-size: 11px; color: var(--fg3); letter-spacing: 0.12em; margin-right: 4px; }
+.proj-mrow .mnum { font-family: var(--font-mono); font-weight: 700; font-size: 11px; color: var(--fg3); letter-spacing: 0.12em; margin-right: 4px; }
 .proj-mrow .pn { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--fg2); }
 .proj-mrow .pn.is-winner { color: var(--bey-cyan); font-weight: 700; }
 .proj-mrow .pn.is-loser { color: var(--loser); }
@@ -871,7 +890,7 @@ h1.display {
 .proj-mrow .sc { font-family: var(--font-crt); font-size: 20px; color: var(--bey-pink); min-width: 20px; text-align: center; }
 .proj-mrow .sc.is-winner { color: var(--bey-cyan); }
 .proj-mrow .sc.dash { color: var(--fg3); }
-.proj-mrow .vs-dot { font-family: var(--font-mono); font-size: 11px; color: var(--fg3); }
+.proj-mrow .vs-dot { font-family: var(--font-mono); font-weight: 700; font-size: 11px; color: var(--fg3); }
 
 /* ── Bracket header ────────────────────────────────────────── */
 .bracket-header {
@@ -944,10 +963,10 @@ h1.display {
 }
 .overlay-right-rail .active-label {
   font-family: var(--font-mono);
+  font-weight: 700;
   font-size: 11px;
   letter-spacing: 0.12em;
   color: var(--fg3);
-  text-transform: uppercase;
   margin-bottom: var(--s-2);
 }
 .overlay-active-card { border-top: 1px solid var(--border); padding-top: var(--s-3); }
@@ -990,10 +1009,10 @@ h1.display {
 }
 .banner-header .round {
   font-family: var(--font-mono);
+  font-weight: 700;
   font-size: 11px;
   letter-spacing: var(--tracking-mega);
   color: var(--bey-pink);
-  text-transform: uppercase;
 }
 .banner-matches { display: flex; gap: var(--s-3); overflow: hidden; }
 .bm {
@@ -1009,10 +1028,10 @@ h1.display {
 .bm.is-done { border-color: var(--bey-pink); }
 .bm .idx {
   font-family: var(--font-mono);
+  font-weight: 700;
   font-size: 10px;
   letter-spacing: 0.12em;
   color: var(--fg3);
-  text-transform: uppercase;
   margin-bottom: 4px;
 }
 .bm .player {

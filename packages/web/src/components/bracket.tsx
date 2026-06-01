@@ -1,6 +1,11 @@
 import type { Tournament, Match } from "@beybstation/shared";
 import { ROUND_LABELS } from "@beybstation/shared";
 
+const BRACKET_H = 880;
+const SLOT_H = BRACKET_H / 8; // 110px per round-1 slot
+const COL_GAP = 28; // must match CSS .bracket { gap: 28px }
+const LINE = "#847C92"; // var(--fg3)
+
 function matchWinner(m: Match): string | null {
   if (m.status === "DONE") {
     if (m.scoreA >= 4) return m.a;
@@ -94,6 +99,12 @@ function BracketMatchCard({ match }: { match: BracketMatch }) {
   );
 }
 
+// Y center of card at (colIdx, cardIdx) within the BRACKET_H area
+function cardCenterY(colIdx: number, cardIdx: number): number {
+  const slotsPerCard = Math.pow(2, colIdx);
+  return (cardIdx * slotsPerCard + slotsPerCard / 2) * SLOT_H;
+}
+
 export default function BracketTree({ tournament }: { tournament: Tournament }) {
   const cols = buildBracket(tournament);
   const activeRound = tournament.activeRound ?? 0;
@@ -105,18 +116,72 @@ export default function BracketTree({ tournament }: { tournament: Tournament }) 
         <span><span className="dot dot--cyan" />Winner</span>
         <span><span className="dot dot--mute" />Pending</span>
       </div>
-      <div className="bracket">
-        {cols.map((col, ci) => (
+
+      {/* Column headers */}
+      <div className="bracket-heads">
+        {cols.map((_, ci) => (
           <div
             key={ci}
-            className={["bracket-col", ci === activeRound && "is-active"].filter(Boolean).join(" ")}
+            className={["col-head", ci === activeRound && "is-active"].filter(Boolean).join(" ")}
           >
-            <div className="col-head">{ROUND_LABELS[ci]}</div>
-            {col.map((m) => (
-              <BracketMatchCard key={m.id} match={m} />
-            ))}
+            {ROUND_LABELS[ci]}
           </div>
         ))}
+      </div>
+
+      {/* Match columns */}
+      <div className="bracket">
+        {cols.map((col, ci) => {
+          const isLast = ci === cols.length - 1;
+          const slotFlex = Math.pow(2, ci);
+          const xMid = COL_GAP / 2;
+
+          return (
+            <div key={ci} className="bracket-col">
+              {/* Vertically-distributed slots */}
+              <div style={{ display: "flex", flexDirection: "column", height: BRACKET_H }}>
+                {col.map((m, i) => (
+                  <div key={m.id} className="bracket-slot" style={{ flex: slotFlex }}>
+                    <BracketMatchCard match={m} />
+                  </div>
+                ))}
+              </div>
+
+              {/* SVG connector lines to next column */}
+              {!isLast && (
+                <svg
+                  aria-hidden="true"
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: "100%",
+                    width: COL_GAP,
+                    height: BRACKET_H,
+                    pointerEvents: "none",
+                    overflow: "visible",
+                  }}
+                  width={COL_GAP}
+                  height={BRACKET_H}
+                >
+                  {col.map((_, i) => {
+                    if (i % 2 !== 0) return null;
+                    const ya = cardCenterY(ci, i);
+                    const yb = cardCenterY(ci, i + 1);
+                    const yn = cardCenterY(ci + 1, i / 2);
+                    return (
+                      <g key={i}>
+                        <line x1={0} y1={ya} x2={xMid} y2={ya} stroke={LINE} strokeWidth={1} />
+                        <line x1={0} y1={yb} x2={xMid} y2={yb} stroke={LINE} strokeWidth={1} />
+                        <line x1={xMid} y1={ya} x2={xMid} y2={yb} stroke={LINE} strokeWidth={1} />
+                        <line x1={xMid} y1={yn} x2={COL_GAP} y2={yn} stroke={LINE} strokeWidth={1} />
+                      </g>
+                    );
+                  })}
+                </svg>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
