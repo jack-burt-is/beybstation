@@ -12,6 +12,16 @@ function BrandTag() {
   );
 }
 
+function VictoryCard({ winner }: { winner: string }) {
+  return (
+    <div className="overlay-victory">
+      <div className="victory-crown">♔</div>
+      <div className="victory-name">{winner}</div>
+      <div className="victory-label">Winner</div>
+    </div>
+  );
+}
+
 function RightRail({ state }: { state: OverlayState }) {
   const active = state.activeMatch ?? (state.matches[0] || null);
   if (!active) return null;
@@ -45,33 +55,41 @@ function BottomBanner({ state }: { state: OverlayState }) {
         <div className="tournament">{state.tournament}</div>
         <div className="round">{state.roundLabel}</div>
       </div>
-      <div className="banner-matches">
-        {state.matches.map((m) => {
-          const aWin = m.done && m.scoreA >= 4;
-          const bWin = m.done && m.scoreB >= 4;
-          return (
-            <div key={m.idx} className={["bm", m.active && "is-active", m.done && "is-done"].filter(Boolean).join(" ")}>
-              <div className="idx">Match {m.idx}</div>
-              <div className={`player${aWin ? " is-winner" : ""}`}>
-                <span className="nm">{m.a}</span>
-                {m.done || m.active ? (
-                  <span className="sc">{m.scoreA}</span>
-                ) : (
-                  <span className="sc pending">–</span>
-                )}
+      {state.winner ? (
+        <div className="banner-winner">
+          <span className="banner-winner-crown">♔</span>
+          <span className="banner-winner-name">{state.winner}</span>
+          <span className="banner-winner-label">Champion</span>
+        </div>
+      ) : (
+        <div className="banner-matches">
+          {state.matches.map((m) => {
+            const aWin = m.done && m.scoreA >= 4;
+            const bWin = m.done && m.scoreB >= 4;
+            return (
+              <div key={m.idx} className={["bm", m.active && "is-active", m.done && "is-done"].filter(Boolean).join(" ")}>
+                <div className="idx">Match {m.idx}</div>
+                <div className={`player${aWin ? " is-winner" : ""}`}>
+                  <span className="nm">{m.a}</span>
+                  {m.done || m.active ? (
+                    <span className="sc">{m.scoreA}</span>
+                  ) : (
+                    <span className="sc pending">–</span>
+                  )}
+                </div>
+                <div className={`player${bWin ? " is-winner" : ""}`}>
+                  <span className="nm">{m.b}</span>
+                  {m.done || m.active ? (
+                    <span className="sc">{m.scoreB}</span>
+                  ) : (
+                    <span className="sc pending">–</span>
+                  )}
+                </div>
               </div>
-              <div className={`player${bWin ? " is-winner" : ""}`}>
-                <span className="nm">{m.b}</span>
-                {m.done || m.active ? (
-                  <span className="sc">{m.scoreB}</span>
-                ) : (
-                  <span className="sc pending">–</span>
-                )}
-              </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
@@ -88,7 +106,11 @@ export default function OverlayPage() {
   return (
     <div className="overlay-root">
       <BrandTag />
-      <RightRail state={data} />
+      {data.winner ? (
+        <VictoryCard winner={data.winner} />
+      ) : (
+        <RightRail state={data} />
+      )}
       <BottomBanner state={data} />
     </div>
   );

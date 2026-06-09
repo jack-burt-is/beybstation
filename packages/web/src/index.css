@@ -1047,6 +1047,35 @@ h1.display {
 .bm .sc { font-family: var(--font-crt); font-size: 16px; color: var(--bey-pink); }
 .bm .player.is-winner .sc { color: var(--bey-cyan); }
 .bm .sc.pending { color: var(--fg3); }
+.banner-winner {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.banner-winner-crown {
+  font-size: 22px;
+  color: var(--bey-cyan);
+  text-shadow: var(--glow-cyan);
+  line-height: 1;
+}
+.banner-winner-name {
+  font-family: var(--font-display);
+  font-size: 20px;
+  text-transform: uppercase;
+  color: var(--bey-cyan);
+  text-shadow: var(--glow-cyan);
+  letter-spacing: var(--tracking-wide);
+}
+.banner-winner-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: var(--tracking-mega);
+  color: var(--bey-pink);
+  text-transform: uppercase;
+  align-self: flex-end;
+  padding-bottom: 2px;
+}
 
 /* ── Spinners / loading ────────────────────────────────────── */
 .spin {
@@ -1069,4 +1098,81 @@ h1.display {
   text-transform: uppercase;
   color: var(--fg2);
   margin-bottom: var(--s-2);
+}
+
+/* ── Active tournament card ────────────────────────────────── */
+.tourn-card.is-active { border-color: var(--bey-cyan); }
+.tourn-card.is-active:hover { border-color: var(--bey-cyan); box-shadow: 8px 8px 0 var(--bey-black), var(--glow-cyan); transform: translate(-2px, -2px); }
+
+/* ── Victory screen (projector) ────────────────────────────── */
+.proj-victory {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--s-7) var(--s-5);
+  gap: var(--s-5);
+}
+.victory-crown {
+  font-size: clamp(72px, 14vw, 160px);
+  color: var(--bey-yellow);
+  line-height: 1;
+  filter: drop-shadow(0 0 32px rgba(245,225,75,0.75));
+}
+.victory-name {
+  font-family: var(--font-display);
+  font-size: clamp(52px, 10vw, 128px);
+  text-transform: uppercase;
+  color: var(--bey-cyan);
+  text-shadow: var(--glow-cyan);
+  line-height: var(--lh-heading);
+}
+.victory-label {
+  font-family: var(--font-shade);
+  font-size: clamp(28px, 5vw, 64px);
+  text-transform: uppercase;
+  color: var(--bey-yellow);
+  letter-spacing: var(--tracking-mega);
+  filter: drop-shadow(0 0 20px rgba(245,225,75,0.6));
+}
+
+/* ── Victory card (overlay) ────────────────────────────────── */
+.overlay-victory {
+  position: absolute;
+  top: 90px;
+  right: 40px;
+  width: 320px;
+  background: rgba(10,10,15,0.95);
+  border: 3px solid var(--bey-cyan);
+  box-shadow: var(--glow-cyan), var(--shadow-hard-cyan);
+  padding: var(--s-6) var(--s-5);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-3);
+}
+.overlay-victory .victory-crown {
+  font-size: 64px;
+  color: var(--bey-yellow);
+  line-height: 1;
+  filter: drop-shadow(0 0 20px rgba(245,225,75,0.8));
+}
+.overlay-victory .victory-name {
+  font-family: var(--font-display);
+  font-size: 44px;
+  text-transform: uppercase;
+  color: var(--bey-cyan);
+  text-shadow: var(--glow-cyan);
+  line-height: var(--lh-heading);
+}
+.overlay-victory .victory-label {
+  font-family: var(--font-shade);
+  font-size: 26px;
+  text-transform: uppercase;
+  color: var(--bey-yellow);
+  letter-spacing: var(--tracking-mega);
+  filter: drop-shadow(0 0 12px rgba(245,225,75,0.6));
 }

@@ -5,6 +5,8 @@ import {
   listTournaments,
   getTournament,
   getActiveTournament,
+  getActiveTournamentId,
+  setActiveTournamentId,
   createTournament,
   updateTournamentMeta,
   generateRound,
@@ -31,8 +33,11 @@ async function requireAdmin(c: Context): Promise<boolean> {
 // ── Public routes ─────────────────────────────────────────────
 
 router.get("/", async (c) => {
-  const tournaments = await listTournaments();
-  return c.json<ListTournamentsResponse>({ tournaments });
+  const [tournaments, activeId] = await Promise.all([
+    listTournaments(),
+    getActiveTournamentId(),
+  ]);
+  return c.json<ListTournamentsResponse>({ tournaments, activeId });
 });
 
 router.get("/active", async (c) => {
@@ -66,6 +71,14 @@ router.get("/overlay", async (c) => {
 
   const active = activeIdx >= 0 ? matches[activeIdx] : matches[matches.length - 1] ?? null;
 
+  let winner: string | undefined;
+  if (tournament.status === "COMPLETE") {
+    const finalMatch = round.matches[round.matches.length - 1];
+    if (finalMatch?.status === "DONE") {
+      winner = finalMatch.scoreA >= 4 ? finalMatch.a : finalMatch.b;
+    }
+  }
+
   return c.json<OverlayState>({
     tournament: tournament.name,
     roundLabel: round.label,
@@ -79,6 +92,7 @@ router.get("/overlay", async (c) => {
         }
       : null,
     matches,
+    winner,
   });
 });
 
@@ -101,6 +115,16 @@ router.post("/", async (c) => {
 
   const tournament = await createTournament(body.name.trim(), players);
   return c.json<TournamentResponse>({ tournament }, 201);
+});
+
+router.post("/:id/set-active", async (c) => {
+  if (!(await requireAdmin(c))) return c.json({ error: "Unauthorized" }, 401);
+
+  const tournament = await getTournament(c.req.param("id"));
+  if (!tournament) return c.json({ error: "Not found" }, 404);
+
+  await setActiveTournamentId(tournament.id);
+  return c.json({ ok: true });
 });
 
 router.patch("/:id", async (c) => {

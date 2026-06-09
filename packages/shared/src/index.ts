@@ -43,6 +43,7 @@ export interface TournamentListItem {
 
 export interface ListTournamentsResponse {
   tournaments: TournamentListItem[];
+  activeId: string | null;
 }
 
 export interface TournamentResponse {
@@ -66,4 +67,5 @@ export interface OverlayState {
     done: boolean;
     active: boolean;
   }>;
+  winner?: string;
 }

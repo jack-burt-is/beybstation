@@ -39,6 +39,35 @@ function BracketList({ tournament }: { tournament: Tournament }) {
 }
 
 function ProjectorScreen({ tournament, onExit }: { tournament: Tournament; onExit: () => void }) {
+  if (tournament.status === "COMPLETE") {
+    const finalRound = tournament.rounds[tournament.rounds.length - 1];
+    const finalMatch = finalRound?.matches[finalRound.matches.length - 1];
+    const winner =
+      finalMatch?.status === "DONE"
+        ? finalMatch.scoreA >= 4
+          ? finalMatch.a
+          : finalMatch.b
+        : null;
+
+    return (
+      <div className="projector">
+        <button className="projector-exit" onClick={onExit}>← back</button>
+        <div className="proj-top">
+          <div className="proj-brand">
+            <img src="/logo.png" alt="" />
+            <span>{tournament.name}</span>
+          </div>
+          <div className="proj-live">LIVE</div>
+        </div>
+        <div className="proj-victory">
+          <div className="victory-crown">♔</div>
+          <div className="victory-name">{winner ?? "Champion"}</div>
+          <div className="victory-label">Winner</div>
+        </div>
+      </div>
+    );
+  }
+
   const round = tournament.rounds[tournament.activeRound] ?? tournament.rounds[0];
   if (!round) return null;
 

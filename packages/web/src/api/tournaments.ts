@@ -16,6 +16,9 @@ export const tournaments = {
   create: (name: string, players: string[]) =>
     api.post<TournamentResponse>("/tournaments", { name, players }),
 
+  setActive: (id: string) =>
+    api.post<{ ok: boolean }>(`/tournaments/${id}/set-active`),
+
   update: (id: string, data: { name?: string; players?: string[] }) =>
     api.patch<TournamentResponse>(`/tournaments/${id}`, data),
 

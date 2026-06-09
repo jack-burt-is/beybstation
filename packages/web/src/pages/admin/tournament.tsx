@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Zap, Shuffle, Play, ArrowRight } from "lucide-react";
@@ -41,6 +41,13 @@ export default function AdminTournament() {
 
   const t = data?.tournament;
   const [activeRound, setActiveRound] = useState(0);
+  const didInit = useRef(false);
+  useEffect(() => {
+    if (t && !didInit.current) {
+      didInit.current = true;
+      setActiveRound(t.activeRound);
+    }
+  }, [t]);
 
   const invalidate = () => qc.invalidateQueries({ queryKey: ["tournament", id] });
 

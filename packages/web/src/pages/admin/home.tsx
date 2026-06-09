@@ -1,18 +1,27 @@
 import { useNavigate } from "react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Plus, LogOut } from "lucide-react";
 import { tournaments } from "../../api/tournaments";
 import { clearToken } from "../../lib/auth";
 import Header from "../../components/header";
 import Button from "../../components/button";
+import Badge from "../../components/badge";
 
 export default function AdminHome() {
   const navigate = useNavigate();
+  const qc = useQueryClient();
 
   const { data, isLoading } = useQuery({
     queryKey: ["tournaments"],
     queryFn: () => tournaments.list(),
   });
+
+  const setActive = useMutation({
+    mutationFn: (id: string) => tournaments.setActive(id),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["tournaments"] }),
+  });
+
+  const activeId = data?.activeId ?? null;
 
   function signOut() {
     clearToken();
@@ -45,10 +54,23 @@ export default function AdminHome() {
             {data?.tournaments.map((t) => (
               <div
                 key={t.id}
-                className="tourn-card"
+                className={["tourn-card", t.id === activeId && "is-active"].filter(Boolean).join(" ")}
                 onClick={() => navigate(`/admin/tournament/${t.id}`)}
               >
-                <div className="date">Tournament · {t.date.slice(5)}</div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div className="date">Tournament · {t.date.slice(5)}</div>
+                  {t.id === activeId ? (
+                    <Badge kind="win">Active</Badge>
+                  ) : (
+                    <button
+                      className="btn btn--ghost btn--sm"
+                      onClick={(e) => { e.stopPropagation(); setActive.mutate(t.id); }}
+                      disabled={setActive.isPending}
+                    >
+                      Set active
+                    </button>
+                  )}
+                </div>
                 <div className="name">{t.name}</div>
               </div>
             ))}

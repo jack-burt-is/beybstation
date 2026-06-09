@@ -49,13 +49,38 @@ export async function getTournament(id: string): Promise<Tournament | null> {
   return tournament as Tournament;
 }
 
+export async function getActiveTournamentId(): Promise<string | null> {
+  const db = getDb();
+  const result = await db.send(
+    new GetCommand({
+      TableName: tableName(),
+      Key: { pk: "CONFIG", sk: "ACTIVE_TOURNAMENT" },
+    }),
+  );
+  return (result.Item?.value as string) ?? null;
+}
+
+export async function setActiveTournamentId(id: string): Promise<void> {
+  const db = getDb();
+  await db.send(
+    new PutCommand({
+      TableName: tableName(),
+      Item: { pk: "CONFIG", sk: "ACTIVE_TOURNAMENT", value: id },
+    }),
+  );
+}
+
 export async function getActiveTournament(): Promise<Tournament | null> {
+  const activeId = await getActiveTournamentId();
+  if (activeId) {
+    const t = await getTournament(activeId);
+    if (t) return t;
+  }
   const list = await listTournaments();
   const active = list.find(
     (t) => t.status === "STARTED" || t.status === "GENERATED",
   );
   if (!active) {
-    // Fall back to most recently created
     if (!list.length) return null;
     return getTournament(list[0].id);
   }
