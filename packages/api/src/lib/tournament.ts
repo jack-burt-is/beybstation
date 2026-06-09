@@ -238,7 +238,7 @@ export async function updateMatch(
 
   match.scoreA = Math.max(0, Math.min(4, scoreA));
   match.scoreB = Math.max(0, Math.min(4, scoreB));
-  if (finish || match.scoreA >= 4 || match.scoreB >= 4) {
+  if (finish) {
     match.status = "DONE";
   }
 
